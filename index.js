@@ -1,14 +1,16 @@
 import express from "express";
 import dotenv from "dotenv";
 import userRoutes from "./controller/user.routes.js";
+import productRoutes from "./controller/product.routes.js";
 import mongoose from "mongoose";
 dotenv.config();
+import bodyParser from "body-parser";
 const app = express();
 
-
-
-app.use(express.json())
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use("/users", userRoutes);
+app.use("/products", productRoutes);
 mongoose
   .connect(process.env.MONGO_URL)
   .then(() => {
@@ -17,21 +19,6 @@ mongoose
   .catch((err) => {
     console.log(err);
   });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 app.get("/", (req, res) => {
   res.send("OM SRI SAI RAM");
